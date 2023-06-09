@@ -19,15 +19,18 @@ internal static class StatisticsUI
         {
             Load();
         }
-        if (ImGui.Button("Reload"))
+        // Reload
+        if (ImGui.Button("重载"))
         {
             Load();
         }
         ImGui.SameLine();
-        ImGui.Checkbox("Show HQ and non-HQ together", ref P.config.StatsUnifyHQ);
+        // Show HQ and non-HQ together
+        ImGui.Checkbox("同时展示HQ与NQ", ref P.config.StatsUnifyHQ);
         ImGui.SameLine();
         ImGuiEx.SetNextItemFullWidth();
-        ImGui.InputTextWithHint("##search", "Filter items...", ref Filter, 100);
+        // Filter items
+        ImGui.InputTextWithHint("##search", "筛选 items...", ref Filter, 100);
         int cindex = 0;
         foreach (var cData in Data)
         {
@@ -35,7 +38,8 @@ internal static class StatisticsUI
             var display = false;
             if (CharTotal[cData.Key] != 0)
             {
-                if (ImGui.CollapsingHeader($"{Censor.Character(cData.Key)} | Total Ventures: {CharTotal.GetSafe(cData.Key)}###chara{cData.Key}"))
+                // Total Ventures 
+                if (ImGui.CollapsingHeader($"{Censor.Character(cData.Key)} | 消耗探险币共计: {CharTotal.GetSafe(cData.Key)}###chara{cData.Key}"))
                 {
                     display = true;
                 }
@@ -50,7 +54,8 @@ internal static class StatisticsUI
                 {
                     ImGui.Dummy(new(10, 1));
                     ImGui.SameLine();
-                    if (ImGui.CollapsingHeader($"{Censor.Retainer(x.Key)} | Ventures: {num}###{cData.Key}ret{x.Key}"))
+                    // Ventures
+                    if (ImGui.CollapsingHeader($"{Censor.Retainer(x.Key)} | 消耗探险币: {num}###{cData.Key}ret{x.Key}"))
                     {
                         foreach (var c in array)
                         {

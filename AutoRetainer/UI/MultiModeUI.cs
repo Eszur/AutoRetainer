@@ -60,7 +60,8 @@ internal unsafe static class MultiModeUI
                 }*/
             }
             if (colen) ImGui.PopStyleColor();
-            ImGuiEx.Tooltip($"Enable multi-mode for this character");
+            // Enable multi-mode for this character
+            ImGuiEx.Tooltip($"为此角色启用多模式");
             ImGui.SameLine(0, 3);
             if (ImGuiEx.IconButton(FontAwesomeIcon.DoorOpen))
             {
@@ -70,11 +71,13 @@ internal unsafe static class MultiModeUI
                     {
                         z.Preferred = false;
                     }
-                    Notify.Warning("Preferred character has been reset");
+                    // Preferred character has been reset
+                    Notify.Warning("首选角色已重置");
                 }
                 if(MultiMode.Relog(data, out var error))
                 {
-                    Notify.Success("Relogging...");
+                    // Relogging
+                    Notify.Success("重新登录...");
                 }
                 else
                 {
@@ -85,13 +88,15 @@ internal unsafe static class MultiModeUI
             {
                 ImGui.SetClipboardText($"/ays relog {data.Name}@{data.World}");
             }
-            ImGuiEx.Tooltip($"Left click - relog to this character\nRight click - copy relog command into clipboard");
+            // Left click - relog to this character\nRight click - copy relog command into clipboard
+            ImGuiEx.Tooltip($"左键 - 重新登录到该角色\n右键 - 将relog命令复制到剪贴板");
             ImGui.SameLine(0, 3);
             if (ImGuiEx.IconButton(FontAwesomeIcon.Cog))
             {
                 ImGui.OpenPopup($"popup{data.CID}");
             }
-            ImGuiEx.Tooltip($"Configure Character");
+            // Configure Character
+            ImGuiEx.Tooltip($"角色配置");
             ImGui.SameLine(0, 3);
 
             if (ImGui.BeginPopup($"popup{data.CID}"))
@@ -133,8 +138,8 @@ internal unsafe static class MultiModeUI
                         ImGui.EndCombo();
                     }
                 }
-
-                if (ImGui.Checkbox("Preferred Character", ref data.Preferred))
+                // Preferred Character
+                if (ImGui.Checkbox("首选角色", ref data.Preferred))
                 {
                     foreach (var z in P.config.OfflineData)
                     {
@@ -144,11 +149,15 @@ internal unsafe static class MultiModeUI
                         }
                     }
                 }
-                ImGuiComponents.HelpMarker("When operating in multi mode, if there are no other characters with imminent ventures to collect, it will relog back to your preferred character.");
+                //When operating in multi mode, if there are no other characters with imminent ventures to collect, it will relog back to your preferred character.
+                ImGuiComponents.HelpMarker("当在多角色模式下操作时，如果没有其他角色的雇员探险即将完成，将重新登录到你的首选角色。");
+                
+                // Show Retainers in Display Order
+                ImGui.Checkbox("按显示顺序显示雇员", ref data.ShowRetainersInDisplayOrder);
 
-                ImGui.Checkbox("Show Retainers in Display Order", ref data.ShowRetainersInDisplayOrder);
-
-                ImGuiEx.Text($"Automatic Grand Company Expert Delivery:");
+                // Automatic Grand Company Expert Delivery
+                // Grand Company 大国防联军 Expert Delivery 筹备稀有品
+                ImGuiEx.Text($"自动军队筹备稀有品：");
                 if (!AutoGCHandin.Operation)
                 {
                     ImGui.SetNextItemWidth(200f);
@@ -156,19 +165,24 @@ internal unsafe static class MultiModeUI
                 }
                 else
                 {
-                    ImGuiEx.Text($"Can't change this now");
+                    // Can't change this now
+                    ImGuiEx.Text($"现在无法更改");
                 }
                 ImGui.Separator();
-                if (ImGui.Button("Exclude Character"))
+                // Exclude Character
+                if (ImGui.Button("排除角色"))
                 {
                     P.config.Blacklist.Add((data.CID, data.Name));
                 }
-                ImGuiComponents.HelpMarker("Excluding this character will immediately reset it's settings, remove it from this list and exclude all retainers from being processed. You can still run manual tasks on it's retainers. You can cancel this action in settings.");
-                if (ImGui.Button("Reset character data"))
+                // Excluding this character will immediately reset it's settings, remove it from this list and exclude all retainers from being processed. You can still run manual tasks on it's retainers. You can cancel this action in settings.
+                ImGuiComponents.HelpMarker("排除此角色将立即重置其设置，将其从此列表中删除，并排除正在处理中的其所有雇员。你仍可对雇员进行手动操作。你可以在设置中取消这个动作。");
+                // Reset character data
+                if (ImGui.Button("重置角色数据"))
                 {
                     deleteData = data.CID;
                 }
-                ImGuiComponents.HelpMarker("Character's saved data will be removed without excluding it. Character data will be regenerated once you log back into this character.");
+                // Character's saved data will be removed without excluding it. Character data will be regenerated once you log back into this character.
+                ImGuiComponents.HelpMarker("角色的保存数据将会删除，而非排除。一旦你重新登录到这个角色，角色数据将会重新生成。");
                 ImGui.EndPopup();
             }
 
@@ -221,9 +235,12 @@ internal unsafe static class MultiModeUI
                 ImGui.SetCursorPos(storePos);
                 if (ImGui.BeginTable("##retainertable", 4, ImGuiTableFlags.SizingFixedFit | ImGuiTableFlags.Borders))
                 {
-                    ImGui.TableSetupColumn("Name", ImGuiTableColumnFlags.WidthStretch);
-                    ImGui.TableSetupColumn("Job");
-                    ImGui.TableSetupColumn("Venture");
+                    // Name
+                    ImGui.TableSetupColumn("名称", ImGuiTableColumnFlags.WidthStretch);
+                    // Job
+                    ImGui.TableSetupColumn("特职");
+                    // Venture
+                    ImGui.TableSetupColumn("探险详情");
                     ImGui.TableSetupColumn("");
                     ImGui.TableHeadersRow();
                     var retainers = P.GetSelectedRetainers(data.CID);
@@ -343,7 +360,8 @@ internal unsafe static class MultiModeUI
                                 ImGui.SameLine();
                             }
                         }
-                        ImGuiEx.Text($"{(!ret.HasVenture ? "No Venture" : Utils.ToTimeString(ret.GetVentureSecondsRemaining(P.config.TimerAllowNegative)))}");
+                        // No Venture
+                        ImGuiEx.Text($"{(!ret.HasVenture ? "暂无探险" : Utils.ToTimeString(ret.GetVentureSecondsRemaining(P.config.TimerAllowNegative)))}");
                         ImGui.TableNextColumn();
                         ImGui.TableSetBgColor(ImGuiTableBgTarget.CellBg, 0);
                         var n = $"{data.CID} {ret.Name} settings";
@@ -354,20 +372,27 @@ internal unsafe static class MultiModeUI
                         if (ImGuiEx.BeginPopupNextToElement(n))
                         {
                             ImGui.CollapsingHeader($"{Censor.Retainer(ret.Name)} - {Censor.Character(data.Name)} Configuration  ##conf", ImGuiTreeNodeFlags.DefaultOpen | ImGuiTreeNodeFlags.Bullet | ImGuiTreeNodeFlags.OpenOnArrow);
-                            ImGuiEx.Text($"Additional Post-venture Tasks:");
-                            ImGui.Checkbox($"Entrust Duplicates", ref adata.EntrustDuplicates);
-                            ImGui.Checkbox($"Withdraw/Deposit Gil", ref adata.WithdrawGil);
+                            // Additional Post-venture Tasks:
+                            ImGuiEx.Text($"Additional 探险后任务:");
+                            // Entrust Duplicates
+                            ImGui.Checkbox($"同类道具合并递交", ref adata.EntrustDuplicates);
+                            // Withdraw/Deposit Gil
+                            ImGui.Checkbox($"取出/存放 金币(Gil)", ref adata.WithdrawGil);
                             if (adata.WithdrawGil)
                             {
-                                if (ImGui.RadioButton("Withdraw", !adata.Deposit)) adata.Deposit = false;
-                                if (ImGui.RadioButton("Deposit", adata.Deposit)) adata.Deposit = true;
+                                // Withdraw
+                                if (ImGui.RadioButton("取出", !adata.Deposit)) adata.Deposit = false;
+                                // Deposit
+                                if (ImGui.RadioButton("存放", adata.Deposit)) adata.Deposit = true;
                                 ImGui.SetNextItemWidth(200f);
-                                ImGui.InputInt($"Amount, %", ref adata.WithdrawGilPercent.ValidateRange(1, 100), 1, 10);
+                                // Amount
+                                ImGui.InputInt($"数量, %", ref adata.WithdrawGilPercent.ValidateRange(1, 100), 1, 10);
                             }
                             ImGui.EndPopup();
                         }
                         ImGui.SameLine();
-                        if(ImGuiEx.IconButton(Lang.IconPlanner, $"{data.CID} {ret.Name} planner"))
+                        // {data.CID} {ret.Name} planner
+                        if (ImGuiEx.IconButton(Lang.IconPlanner, $"{data.CID} {ret.Name} 计划"))
                         {
                             P.VenturePlanner.Open(data, ret);
                         }

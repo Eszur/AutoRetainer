@@ -74,15 +74,18 @@ namespace AutoRetainer.UI
                 var adata = Utils.GetAdditionalData(SelectedCharacter.CID, SelectedRetainer.Name);
                 if (VentureUtils.IsDoL(SelectedRetainer.Job))
                 {
-                    ImGuiEx.TextCentered($"{Lang.CharLevel}{SelectedRetainer.Level} {ExcelJobHelper.GetJobNameById(SelectedRetainer.Job)} | Gathering: {adata.Gathering} ({((float)adata.Gathering/(float)MaxGathering):P0}) | Perception: {adata.Perception} ({((float)adata.Perception / (float)MaxPerception):P0})");
+                    // Gathering Perception
+                    ImGuiEx.TextCentered($"{Lang.CharLevel}{SelectedRetainer.Level} {ExcelJobHelper.GetJobNameById(SelectedRetainer.Job)} | 获得力: {adata.Gathering} ({((float)adata.Gathering/(float)MaxGathering):P0}) | 鉴别力: {adata.Perception} ({((float)adata.Perception / (float)MaxPerception):P0})");
                 }
                 else
                 {
-                    ImGuiEx.TextCentered($"{Lang.CharLevel}{SelectedRetainer.Level} {ExcelJobHelper.GetJobNameById(SelectedRetainer.Job)} | Item Level: {adata.Ilvl} ({((float)adata.Ilvl / (float)MaxPerception):P0})");
+                    // Item Level
+                    ImGuiEx.TextCentered($"{Lang.CharLevel}{SelectedRetainer.Level} {ExcelJobHelper.GetJobNameById(SelectedRetainer.Job)} | 物品等级: {adata.Ilvl} ({((float)adata.Ilvl / (float)MaxPerception):P0})");
                 }
                 ImGuiEx.InputWithRightButtonsArea("VBrowser", delegate
                 {
-                    ImGui.InputTextWithHint("##search", "Filter...", ref search, 100);
+                    // Filter
+                    ImGui.InputTextWithHint("##search", "筛选...", ref search, 100);
                 }, delegate
                 {
                     ImGuiEx.TextV($"{Lang.CharLevel}:");
@@ -97,7 +100,8 @@ namespace AutoRetainer.UI
                 });
                 if(adata.Gathering == -1 || adata.Perception == -1 || adata.Ilvl == -1 || SelectedRetainer.Level == 0)
                 {
-                    ImGuiEx.TextWrapped($"Data is absent for this retainer. Access retainer bell and select that retainer to populate data.");
+                    // Data is absent for this retainer. Access retainer bell and select that retainer to populate data.
+                    ImGuiEx.TextWrapped($"此雇员没有数据。访问雇员铃并选择该雇员来填充数据。");
                 }
                 else
                 {

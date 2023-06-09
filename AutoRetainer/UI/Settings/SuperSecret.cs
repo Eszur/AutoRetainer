@@ -13,19 +13,26 @@ namespace AutoRetainer.UI.Settings
         internal static void Draw()
         {
             ImGuiEx.TextWrapped(ImGuiColors.ParsedOrange, "Anything can happen here.");
-            InfoBox.DrawBox("Notification settings", NotifyGui.Draw);
-            ImGui.Checkbox("Old RetainerSense", ref P.config.OldRetainerSense);
-            ImGuiComponents.HelpMarker("Detect and use the closest Summoning Bell within valid distance of the player.");
-            ImGuiEx.TextWrapped(ImGuiColors.DalamudGrey, "RetainerSense is enforced to be active during MultiMode operation.");
+            // Notification settings
+            InfoBox.DrawBox("通知设置", NotifyGui.Draw);
+            // Old RetainerSense
+            ImGui.Checkbox("旧的RetainerSense", ref P.config.OldRetainerSense);
+            // Detect and use the closest Summoning Bell within valid distance of the player.
+            ImGuiComponents.HelpMarker("检测并使用玩家有效距离内最近的雇员铃。");
+            // RetainerSense is enforced to be active during MultiMode operation.
+            ImGuiEx.TextWrapped(ImGuiColors.DalamudGrey, "在多模式运行期间，RetainerSense被强制激活。");
             ImGui.Separator();
-            ImGui.Checkbox($"Unsafe options protection", ref P.config.UnsafeProtection);
+            // Unsafe options protection
+            ImGui.Checkbox($"不安全的选项保护", ref P.config.UnsafeProtection);
             ImGui.SameLine();
+            // Write to registry
             if (ImGui.Button($"Write to registry"))
             {
                 Safety.Set(P.config.UnsafeProtection);
             }
             var g = Safety.Get();
-            ImGuiEx.Text(g?ImGuiColors.ParsedGreen:ImGuiColors.DalamudRed, $"Safety flag: {(g ? "Present" : "Absent")}");
+            // Safety flag: {(g ? "Present" : "Absent")}
+            ImGuiEx.Text(g?ImGuiColors.ParsedGreen:ImGuiColors.DalamudRed, $"安全标志: {(g ? "存在" : "缺失")}");
         }
     }
 }

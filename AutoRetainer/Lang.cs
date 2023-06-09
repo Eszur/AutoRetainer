@@ -26,10 +26,10 @@ internal static class Lang
 
     internal static readonly string[] FieldExplorationNames = new string[]
     {
-        "Field Exploration.",
-        "Highland Exploration.",
-        "Woodland Exploration.",
-        "Waterside Exploration.",
+        "Field Exploration(平地).",
+        "Highland Exploration(山岳).",
+        "Woodland Exploration(森林).",
+        "Waterside Exploration(水岸).",
         "探索依頼：平地　　（必要ベンチャースクリップ：2枚）",
         "探索依頼：山岳　　（必要ベンチャースクリップ：2枚）",
         "探索依頼：森林　　（必要ベンチャースクリップ：2枚）",
@@ -41,15 +41,19 @@ internal static class Lang
         "Exploration en plaine (2 jetons)",
         "Exploration en montagne (2 jetons)",
         "Exploration en forêt (2 jetons)",
-        "Exploration en rivage (2 jetons)"
+        "Exploration en rivage (2 jetons)",
+        "平地探索委托（需要2枚探险币）",
+        "山岳探索委托（需要2枚探险币）",
+        "森林探索委托（需要2枚探险币）",
+        "水岸探索委托（需要2枚探险币）"
     };
 
     internal static readonly string[] HuntingVentureNames = new string[]
     {
-        "Hunting.",
-        "Mining.",
-        "Botany.",
-        "Fishing.",
+        "Hunting(狩猎).",
+        "Mining(采矿).",
+        "Botany(采伐).",
+        "Fishing(捕鱼).",
         "調達依頼：渉猟　　（必要ベンチャースクリップ：1枚）",
         "調達依頼：採掘　　（必要ベンチャースクリップ：1枚）",
         "調達依頼：園芸　　（必要ベンチャースクリップ：1枚）",
@@ -61,7 +65,11 @@ internal static class Lang
         "Travail de chasse (1 jeton)",
         "Travail de mineur (1 jeton)",
         "Travail de botaniste (1 jeton)",
-        "Travail de pêche (1 jeton)"
+        "Travail de pêche (1 jeton)",
+        "狩猎筹集委托（需要1枚探险币）",
+        "采矿筹集委托（需要1枚探险币）",
+        "采伐筹集委托（需要1枚探险币）",
+        "捕鱼筹集委托（需要1枚探险币）"
     };
 
     internal static readonly string[] QuickExploration = new string[]
@@ -69,7 +77,8 @@ internal static class Lang
         "Quick Exploration.",
         "ほりだしもの依頼　（必要ベンチャースクリップ：2枚）",
         "Schneller Streifzug (2 Wertmarken)",
-        "Tâche improvisée (2 jetons)"
+        "Tâche improvisée (2 jetons)",
+        "自由探索委托（需要2枚探险币）",
     };
 
     internal static readonly string[] Entrance = new string[]
@@ -77,7 +86,8 @@ internal static class Lang
         "ハウスへ入る",
         "Eingang",
         "Entrée",
-        "Entrance"
+        "Entrance",
+        "进入房屋"
     };
 
     internal static readonly string[] ConfirmHouseEntrance = new string[]
@@ -85,7 +95,8 @@ internal static class Lang
         "「ハウス」へ入りますか？",
         "Das Gebäude betreten?",
         "Entrer dans la maison ?",
-        "Enter the estate hall?"
+        "Enter the estate hall?",
+        "要进入这间房屋吗？"
     };
 
     internal static string RetainerAskCategoryText => Svc.ClientState.ClientLanguage switch
@@ -93,6 +104,7 @@ internal static class Lang
         ClientLanguage.Japanese => "依頼するリテイナーベンチャーを選んでください",
         ClientLanguage.German => "Wähle eine Unternehmung, auf die du den Gehilfen schicken möchtest.",
         ClientLanguage.French => "Choisissez un type de tâche :",
+        ClientLanguage.ChineseSimplified => "请选择要委托的探险",
         _ => "Select a category."
     };
 

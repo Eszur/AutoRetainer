@@ -35,7 +35,8 @@ unsafe internal class ConfigGui : Window
         {
             ImGui.BeginDisabled();
         }
-        if (ImGui.Checkbox($"Enable {P.Name} (automatic mode)", ref e))
+        // Enable {P.Name} (automatic mode)
+        if (ImGui.Checkbox($"启用 {P.Name} (自动模式)", ref e))
         {
             P.WasEnabled = false;
             if(e)
@@ -56,17 +57,20 @@ unsafe internal class ConfigGui : Window
         if (P.WasEnabled)
         {
             ImGui.SameLine();
-            ImGuiEx.Text(GradientColor.Get(ImGuiColors.DalamudGrey, ImGuiColors.DalamudGrey3, 500), $"Paused");
+            // Paused
+            ImGuiEx.Text(GradientColor.Get(ImGuiColors.DalamudGrey, ImGuiColors.DalamudGrey3, 500), $"暂停");
         }
         ImGui.SameLine();
-        if(ImGui.Checkbox("Multi", ref MultiMode.Enabled))
+        // Multi
+        if (ImGui.Checkbox("多角色模式", ref MultiMode.Enabled))
         {
             MultiMode.OnMultiModeEnabled();
         }
         if(P.config.CharEqualize && MultiMode.Enabled)
         {
             ImGui.SameLine();
-            if(ImGui.Button("Reset counters"))
+            // Reset counters
+            if (ImGui.Button("重置计数器"))
             {
                 MultiMode.CharaCnt.Clear();
             }
@@ -76,7 +80,8 @@ unsafe internal class ConfigGui : Window
         {
             ImGuiEx.Text(ImGuiColors.DalamudRed, $"Plugin operation is suppressed by other plugin.");
             ImGui.SameLine();
-            if (ImGui.SmallButton("Cancel"))
+            // Cancel
+            if (ImGui.SmallButton("取消"))
             {
                 IPC.Suppressed = false;
             }
@@ -85,7 +90,8 @@ unsafe internal class ConfigGui : Window
         if (P.TaskManager.IsBusy)
         {
             ImGui.SameLine();
-            if (ImGui.Button($"Abort {P.TaskManager.NumQueuedTasks} tasks"))
+            // Abort {P.TaskManager.NumQueuedTasks} tasks
+            if (ImGui.Button($"终止 {P.TaskManager.NumQueuedTasks} 任务"))
             {
                 P.TaskManager.Abort();
             }
@@ -93,17 +99,23 @@ unsafe internal class ConfigGui : Window
 
 
         ImGuiEx.EzTabBar("tabbar",
-                ("Retainers", MultiModeUI.Draw, null, true),
-                (P.config.RecordStats ? "Statistics" : null, StatisticsUI.Draw, null, true),
-                ("Settings", SettingsMain.Draw, null, true),
-                (P.config.Expert?"Expert":null, Expert.Draw, null, true),
+                // Retainers
+                ("雇员", MultiModeUI.Draw, null, true),
+                // Statistics
+                (P.config.RecordStats ? "统计" : null, StatisticsUI.Draw, null, true),
+                // Settings
+                ("设置", SettingsMain.Draw, null, true),
+                // Expert
+                (P.config.Expert?"专业":null, Expert.Draw, null, true),
                 //("Beta", Beta.Draw, null, true),
-                ("About", delegate { AboutTab.Draw(P); }, null, true),
+                // About
+                ("关于", delegate { AboutTab.Draw(P); }, null, true),
                 (P.config.Verbose ? "Dev" : null, delegate
                 {
                     ImGuiEx.EzTabBar("DebugBar",
                         ("Log", InternalLog.PrintImgui, null, false),
-                        ("Retainers (old)", Retainers.Draw, null, true),
+                        // Retainers (old)
+                        ("雇员(旧)", Retainers.Draw, null, true),
                         ("Debug", Debug.Draw, null, true),
                         ("WIP", SuperSecret.Draw, null, true)
                     );
